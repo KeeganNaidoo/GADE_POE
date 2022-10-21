@@ -14,7 +14,8 @@ namespace Basic_Hero_Game
         
         public Item[] Items
         {
-            get
+            get { }
+            set { }
         }
         private Enemy[] enemies;
         public Enemy[] Enemies
