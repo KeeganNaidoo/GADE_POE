@@ -9,14 +9,6 @@ namespace Basic_Hero_Game
 {
     public class Map
     {
-
-        private Item[] items;
-        
-        public Item[] Items
-        {
-            get { }
-            set { }
-        }
         private Enemy[] enemies;
         public Enemy[] Enemies
         {
@@ -29,6 +21,16 @@ namespace Basic_Hero_Game
             get { return hero; }
             set { hero = value; }
         }
+
+        private Gold gold;
+        public Gold Gold
+        {
+            get { return gold; }
+            set { gold = value; }
+        }
+
+        public Mage Mage { get; private set; }
+
 
         private Random random = new Random();
         private int mapHeight; // Y
@@ -68,19 +70,11 @@ namespace Basic_Hero_Game
 
             for (enemyCount = 0; enemyCount < TotalEnemyAmount; enemyCount++) // Spawn all enemies
             {
-                if (random.Next(1, 3) == 1)
-                {
-                    Create(Tile.TileType.SwampCreature);
-                }
-                else
-                {
-                    Create(Tile.TileType.Mage);
-                }
+                Create(Tile.TileType.SwampCreature);
 
-                
+                Create(Tile.TileType.Mage);
             }
 
-            for (itemCount = 0; itemCount < )
             Create(Tile.TileType.Hero); // spawn hero
 
             UpdateVision();
@@ -97,15 +91,26 @@ namespace Basic_Hero_Game
                 yPos = random.Next(1, mapHeight - 1);
             }
             while (TileMap[yPos, xPos].Type != Tile.TileType.EmptyTile); // Don't spawn on a space that is not empty
-            if (type == Tile.TileType.SwampCreature) // spawn enemy
+            if (type == Tile.TileType.SwampCreature) // spawn swamp creature
             {
                 Enemies[enemyCount] = new SwampCreature(xPos, yPos, enemyCount);
                 TileMap[yPos, xPos] = Enemies[enemyCount];
             }
-            else // spawn hero
+            else if (type == Tile.TileType.Mage) // spawn mage
+            {
+                Mage = new Mage(xPos, yPos, enemyCount);
+                TileMap[yPos, xPos] = Mage;
+            }
+            else if (type == Tile.TileType.Hero) // spawn hero
             {
                 Hero = new Hero(xPos, yPos, 15);
                 TileMap[yPos, xPos] = Hero;
+            }
+            else if (type == Tile.TileType.Gold) // spawn gold
+            {
+                Gold = new Gold(xPos, yPos);
+                TileMap[yPos, xPos] = Gold;
+
             }
             return TileMap[yPos, xPos];
         }

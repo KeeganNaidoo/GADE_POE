@@ -124,6 +124,14 @@ namespace Basic_Hero_Game
 
         }
 
-        
+       private void button1_Click(object sender, EventArgs e)
+        {
+            //Save();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //Load();
+        }
     }
 }

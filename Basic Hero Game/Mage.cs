@@ -8,7 +8,7 @@ namespace Basic_Hero_Game
 {
     public class Mage : Enemy
     {
-        private Mage mage;
+       // private Mage mage;
         public Mage(int x, int y, int enemyArrayNum) : base(x, y, enemyArrayNum)
         {
             MaxHP = 5;

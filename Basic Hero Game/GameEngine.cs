@@ -4,6 +4,8 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Basic_Hero_Game
 {
@@ -83,6 +85,27 @@ namespace Basic_Hero_Game
                 }
             }
             CheckForDead(Map.Hero);
+        }
+
+        public void Save()
+        {
+            FileStream fs = new FileStream("Save.Map", FileMode.Create);
+            BinaryWriter bw = new BinaryWriter(fs);
+
+           //bw.Write();
+         
+
+
+            bw.Close();
+            fs.Close();
+
+        }
+
+        static void Load()
+        {
+            FileStream fs = new FileStream("Load.Map", FileMode.Open);
+            BinaryReader br = new BinaryReader(fs);
+
         }
     }
 }
