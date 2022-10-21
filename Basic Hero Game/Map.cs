@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Basic_Hero_Game
 {
     public class Map
     {
+
+        private Item[] items;
+        
+        public Item[] Items
+        {
+            get
+        }
         private Enemy[] enemies;
         public Enemy[] Enemies
         {
@@ -59,8 +67,19 @@ namespace Basic_Hero_Game
 
             for (enemyCount = 0; enemyCount < TotalEnemyAmount; enemyCount++) // Spawn all enemies
             {
-                Create(Tile.TileType.SwampCreature);
+                if (random.Next(1, 3) == 1)
+                {
+                    Create(Tile.TileType.SwampCreature);
+                }
+                else
+                {
+                    Create(Tile.TileType.Mage);
+                }
+
+                
             }
+
+            for (itemCount = 0; itemCount < )
             Create(Tile.TileType.Hero); // spawn hero
 
             UpdateVision();

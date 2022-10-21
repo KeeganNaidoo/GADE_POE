@@ -29,7 +29,7 @@ namespace Basic_Hero_Game
             double distance = Math.Pow(target.X - X, 2) + Math.Pow(target.Y - Y, 2); 
             distance = Math.Sqrt(distance);
 
-            return distance <= 1.5;
+            return distance <= 1.5; 
             
 
         }
