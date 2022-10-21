@@ -87,7 +87,7 @@ namespace Basic_Hero_Game
             CheckForDead(Map.Hero);
         }
 
-        public void Save()
+        public void Save() //method to save map class
         {
             FileStream fs = new FileStream("Save.Map", FileMode.Create);
             BinaryWriter bw = new BinaryWriter(fs);
@@ -101,11 +101,18 @@ namespace Basic_Hero_Game
 
         }
 
-        static void Load()
+        static void Load() //method to load map class
         {
             FileStream fs = new FileStream("Load.Map", FileMode.Open);
             BinaryReader br = new BinaryReader(fs);
 
         }
+
+        public void EnemyAttacks() //method thats allows enemies to attack
+        {
+
+        }
+
+        
     }
 }

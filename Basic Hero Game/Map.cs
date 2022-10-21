@@ -29,6 +29,13 @@ namespace Basic_Hero_Game
             set { gold = value; }
         }
 
+        private Item[] items;
+        public Item[] Items  //Q3.1 - create item array to store items from map
+        {
+            get { return items; }
+            set { items = value; }
+        }
+
         public Mage Mage { get; private set; }
 
 
@@ -144,6 +151,11 @@ namespace Basic_Hero_Game
                 mapString += "\n";
             }
             return mapString;
+        }
+
+        public void GetItemAtPosition(int x, int y) //s method searches the Items array for an item that exists
+        {
+            return;
         }
 
     }

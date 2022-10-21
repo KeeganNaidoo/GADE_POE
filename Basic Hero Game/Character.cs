@@ -94,8 +94,11 @@ namespace Basic_Hero_Game
 
 
         public abstract override string ToString();
-        
 
+        public void Pickup(Item item) //checks the type of item passed in as a parameter
+        {
+            return;
+        }
 
     }
     
