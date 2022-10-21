@@ -8,14 +8,25 @@ namespace Basic_Hero_Game
 {
     public abstract class Tile
     {
-        protected  int X; 
-        protected  int Y; 
+        protected int x;
+        protected int y;
+
+        public int X
+        {
+            get { return x; }
+            set { x = value; }
+        }
+        public int Y
+        {
+            get { return y; }
+            set { y = value; }
+        }
 
         public enum TileType  //Describes the type of tile
         {
             Hero = 'H',
             SwampCreature = 'C',
-            Gold = '$', 
+            Gold = '$',
             Weapon = '|',
             Obstacle = 'X',
             EmptyTile = '.',
@@ -23,20 +34,11 @@ namespace Basic_Hero_Game
 
         public Tile(int x, int y)
         {
-            this.X = x;
-            this.X = y;
+            X = x;
+            Y = y;
         }
-        struct Position 
-        {
-            public int x;
-            public int y;
 
-            public void SetPosition(int x, int y)
-            {
-                this.x = x;
-                this.y = y;
-            }
-        }
+        public TileType Type { get; set; }
 
     }
 

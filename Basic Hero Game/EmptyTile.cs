@@ -10,7 +10,7 @@ namespace Basic_Hero_Game
     {
         public EmptyTile(int x, int y) : base(x, y)   //calls the base class’s constructor with X and Y parameters.
         {
-
+            Type = TileType.EmptyTile;
         }
     }
 }

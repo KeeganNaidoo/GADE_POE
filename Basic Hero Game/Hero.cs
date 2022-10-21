@@ -8,28 +8,25 @@ namespace Basic_Hero_Game
 {
     public class Hero : Character
     {
-        public Hero(int x, int y, int hp, int damage) : base(x, y)
+        public Hero(int x, int y, int maxHP) : base(x, y)
         {
-            
+            MaxHP = maxHP;
+            HP = MaxHP;
+            Damage = 2;
+            Type = TileType.Hero;
         }
-
-        public Hero()
+        public override Movement ReturnMove(Movement move)
         {
-
-        }
-
-        public override ReturnMove()
-        {
-            
+            if (CharactersVision[(int)move].Type == TileType.EmptyTile)
+            {
+                return move;
+            }
+            else return Movement.NoMovement;
         }
 
         public override string ToString()
         {
-            return base.ToString("Player Stats: " +
-                                 "HP:" HP / Max HP +
-                                 "Damage" + Damage +
-                                 "position" + [X,Y]
-                );
+            return $"Player Stats:\nHP: {HP}/{MaxHP}\nDamage: {Damage}\n[{X},{Y}]"; 
         }
     }
 }

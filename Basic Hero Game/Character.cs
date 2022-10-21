@@ -23,7 +23,7 @@ namespace Basic_Hero_Game
             Right,
         }
 
-        int[] charactersVision { get; set; }
+        public Tile[] CharactersVision { get; set; } = new Tile[5];
 
         public Character(int x, int y) : base(x, y)
         {
@@ -32,15 +32,15 @@ namespace Basic_Hero_Game
 
         
        
-        public virtual void Attack() // Attacks a target and decreases its health by the attacking character’s damage
+        public virtual void Attack(Character target) // Attacks a target and decreases its health by the attacking character’s damage
         {
-            
-            
-            //MaxHP = MaxHP - HP;
+            target.HP = target.HP - Damage;
+
+            //MaxHP = MaxHP - HP;(old code)
 
         }
 
-        public bool ISDead() //Checks if the character is dead
+        public bool IsDead() //Checks if the character is dead
         {
            if (HP <= 0)
             {
@@ -64,8 +64,28 @@ namespace Basic_Hero_Game
             return Math.Abs(target.X - X) + Math.Abs(target.Y - Y);    
         }
 
-        public void Move() //Edits a unit’s X and Y values to move it up/down/left/right based on the identifier from the enum
+        public void Move(Movement move) //Edits a unit’s X and Y values to move it up/down/left/right based on the identifier from the enum
         {
+            if (move == Movement.NoMovement)
+            {
+
+            }
+            else if (move == Movement.Up)
+            {
+                Y -= 1; // edit characters coordinates
+            }
+            else if (move == Movement.Down)
+            {
+                Y += 1;
+            }
+            else if (move == Movement.Left)
+            {
+                X -= 1;
+            }
+            else if (move == Movement.Right)
+            {
+                X += 1;
+            }
 
         }
 

@@ -8,17 +8,18 @@ namespace Basic_Hero_Game
 {
     public abstract class Enemy : Character
     {
-       
         protected Random random = new Random();
+        public TileType EnemyType { get; set; } // For the ToString() method below
 
-        public Enemy(int x, int y, int damage, int hp, int maxhp) : base(x, y)
+        public int EnemyArrayNum { get; set; } // For finding out which enemy to remove when it dies
+        public Enemy(int x, int y, int enemyArrayNum) : base(x, y)
         {
-            
+            EnemyArrayNum = enemyArrayNum;
         }
 
-        public override string ToString() 
+        public override string ToString()
         {
-            return string "Enemy: " + [X, Y] + (Amount DMG)
+            return $"{EnemyType} HP: {HP}/{MaxHP} Damage: {Damage} [{X},{Y}]";
         }
 
     }

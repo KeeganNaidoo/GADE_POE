@@ -11,7 +11,7 @@ namespace Basic_Hero_Game
     {
         public Obstacle(int x, int y) : base(x,y)    //calls the base class’s constructor with X and Y parameters.
         {
-
+            Type = TileType.Obstacle;
         }
     }
 }
