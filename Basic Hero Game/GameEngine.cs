@@ -89,47 +89,49 @@ namespace Basic_Hero_Game
 
         public void Save() //method to save map class
         {
-            
             FileStream fs = new FileStream("SaveFile.bin", FileMode.Create);
-            BinaryWriter write = new BinaryWriter(fs);
+            BinaryWriter bw = new BinaryWriter(fs);
 
-            write.Write(Map.mapWidth);
-            write.Write(Map.mapHeight);
-            write.Write(Map.TotalEnemyAmount);
-            write.Write(Map.goldAmount);
+            bw.Write(Map.TileMap.GetLength(1)); // Map width
+            bw.Write(Map.TileMap.GetLength(0)); // Map height
 
-            for (int row = 0; row < Map.mapHeight; row++)
+            // Write Hero
+            bw.Write(Map.Hero.X);
+            bw.Write(Map.Hero.Y);
+            bw.Write(Map.Hero.PublicHP);      // HP needs to be public
+            bw.Write(Map.Hero.PublicMaxHP);   // MaxHp needs to be public
+            bw.Write(Map.Hero.GoldPurse);
+
+            // Write Enemies
+            bw.Write(Map.TotalEnemyAmount);
+            for (int i = 0; i < Map.TotalEnemyAmount; i++)
             {
-                for (int col = 0; col < Map.mapWidth; col++)
+                bw.Write(Map.Enemies[i].X);
+                bw.Write(Map.Enemies[i].Y);
+                bw.Write((char)Map.Enemies[i].Type); // To determine what type of enemy to spawn
+                bw.Write(Map.Enemies[i].PublicHP);
+            }
+
+            // Write Items
+            bw.Write(Map.Items.Length);
+            for (int i = 0; i < Map.Items.Length; i++)
+            {
+                if (Map.Items[i] == null)
                 {
-                    write.Write((char)Map.TileMap[row, col].Type);
-                    if (Map.TileMap[row, col].Type == Tile.TileType.Hero)
-                    {
-                        write.Write(Map.Hero.HP);
-                        write.Write(Map.Hero.MaxHP);
-                        write.Write(Map.Hero.GoldPurse);
-                    }
-                    else if (Map.TileMap[row, col].Type == Tile.TileType.SwampCreature)
-                    {
-                        SwampCreature sc = (SwampCreature)Map.TileMap[row, col];
-                        write.Write(sc.HP);
-                        write.Write(sc.GoldPurse);
-                    }
-                    else if (Map.TileMap[row, col].Type == Tile.TileType.Mage)
-                    {
-                        Mage mage = (Mage)Map.TileMap[row, col];
-                        write.Write(mage.HP);
-                        write.Write(mage.GoldPurse);
-                    }
-                    else if (Map.TileMap[row, col].Type == Tile.TileType.Gold)
-                    {
-                        Gold gold = (Gold)Map.TileMap[row, col];
-                        write.Write(gold.GoldAmount);
-                    }
+                    bw.Write(true); // IsNull 
+                    // You must have some way of indicating to the load method that some items could be null.
+                    // This is so that you don't end up reading null properties and creating gold objects with null properties.
+                }
+                else
+                {
+                    bw.Write(false); // !IsNull
+                    bw.Write(Map.Items[i].X);
+                    bw.Write(Map.Items[i].Y);
+                    bw.Write((Map.Items[i] as Gold).GoldAmount);
                 }
             }
 
-            write.Close();
+            bw.Close();
             fs.Close();
         }
 

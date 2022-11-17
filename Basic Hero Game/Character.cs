@@ -14,6 +14,17 @@ namespace Basic_Hero_Game
 
         protected int Damage { get; set; } //attack damage
 
+        public int PublicHP
+        {
+            get { return HP; }
+            set { HP = value; }
+        }
+        public int PublicMaxHP
+        {
+            get { return MaxHP; }
+            set { MaxHP = value; }
+        }
+
         public enum Movement
         {
             NoMovement,
