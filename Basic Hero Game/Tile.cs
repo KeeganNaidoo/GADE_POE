@@ -31,6 +31,8 @@ namespace Basic_Hero_Game
             Obstacle = 'X',
             EmptyTile = '.',
             Mage = 'M',
+            MeleeWeapon = 'W',
+            RangedWeapon = 'R'
         }
 
         public Tile(int x, int y)

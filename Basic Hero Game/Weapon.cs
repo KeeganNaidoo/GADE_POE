@@ -10,7 +10,7 @@ namespace Basic_Hero_Game
     {
         protected int Damage { get; set; } //current damage to target
 
-        protected int Range { get; set; } //how many spaces between target
+        public virtual int Range { get; set; } //how many spaces between target
 
         protected int Durability { get; set; } //how many hit will the weapon last
 
