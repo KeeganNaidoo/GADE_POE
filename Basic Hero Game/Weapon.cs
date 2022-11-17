@@ -20,7 +20,7 @@ namespace Basic_Hero_Game
 
         public Weapon(int x, int y) : base(x, y)         //constructor with x, y positions
         {
-            return;
+            
         }
     }
 }
