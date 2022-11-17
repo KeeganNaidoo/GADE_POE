@@ -18,6 +18,14 @@ namespace Basic_Hero_Game
             Type = TileType.Mage;
 
         }
+        public Mage(int x, int y, int enemyArrayNum, int hp) : base(x, y, enemyArrayNum) // For loading from save file
+        {
+            MaxHP = 5;
+            HP = hp;      // The game could be saved at a point where a Mage doesn't have full health
+            Damage = 5;
+            EnemyType = TileType.Mage;
+            Type = TileType.Mage;
+        }
 
         public override Movement ReturnMove(Movement move = 0)
         {

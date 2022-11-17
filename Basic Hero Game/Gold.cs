@@ -23,6 +23,12 @@ namespace Basic_Hero_Game
 
 
         }
+        public Gold(int x, int y, int goldAmount) : base(x, y) // For loading from save file
+        {
+            GoldAmount = goldAmount;
+            Type = TileType.Gold;
+        }
+
 
         public override string ToString()
         {

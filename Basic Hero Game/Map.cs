@@ -38,10 +38,11 @@ namespace Basic_Hero_Game
 
         public Mage Mage { get; private set; }
 
-
+        private int TotalGoldDrops;
+        public int goldAmount;
         private Random random = new Random();
-        private int mapHeight; // Y
-        private int mapWidth; // X
+        public int mapHeight; // Y
+        public int mapWidth; // X
         public int TotalEnemyAmount { get; set; }
         private int enemyCount; // For keeping track of the enemy number for the enemies array
 
@@ -85,6 +86,33 @@ namespace Basic_Hero_Game
             Create(Tile.TileType.Hero); // spawn hero
 
             UpdateVision();
+        }
+
+        public Map(int width, int height) // For loading from save file
+        {
+            mapWidth = width;
+            mapHeight = height;
+            TileMap = new Tile[mapHeight, mapWidth];
+
+            // Create border and empty spaces
+            for (int row = 0; row < TileMap.GetLength(0); row++) // Iterate through 2D array
+            {
+                for (int column = 0; column < TileMap.GetLength(1); column++)
+                {
+                    if (row == 0 || row == mapHeight - 1) // Set Bottom and Top edges to Obstacles
+                    {
+                        TileMap[row, column] = new Obstacle(column, row);
+                    }
+                    else if (column == 0 || column == mapWidth - 1) // Set Left and Right edges to Obstacles
+                    {
+                        TileMap[row, column] = new Obstacle(column, row);
+                    }
+                    else // Set anything else to empty spaces
+                    {
+                        TileMap[row, column] = new EmptyTile(column, row);
+                    }
+                }
+            }
         }
 
         public Tile Create(Tile.TileType type)
@@ -153,7 +181,7 @@ namespace Basic_Hero_Game
             return mapString;
         }
 
-        public void GetItemAtPosition(int x, int y) //s method searches the Items array for an item that exists
+        public void GetItemAtPosition(int x, int y) //this method searches the Items array for an item that exists
         {
             return;
         }

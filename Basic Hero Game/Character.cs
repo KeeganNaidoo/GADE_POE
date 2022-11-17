@@ -8,9 +8,9 @@ namespace Basic_Hero_Game
 {
     public abstract class Character : Tile    //abstract base class called Character that inherits from Tile
     {
-        protected int HP { get; set; } //current hit points
+        public int HP { get; set; } //current hit points
 
-        protected int MaxHP { get; set; } //max hit points
+        public int MaxHP { get; set; } //max hit points
 
         protected int Damage { get; set; } //attack damage
 
@@ -22,6 +22,8 @@ namespace Basic_Hero_Game
             Left,
             Right,
         }
+
+        public int GoldPurse { get; set; }
 
         public Tile[] CharactersVision { get; set; } = new Tile[5];
 

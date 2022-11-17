@@ -21,6 +21,14 @@ namespace Basic_Hero_Game
             Type = TileType.SwampCreature;
 
         }
+        public SwampCreature(int x, int y, int enemyArrayNum, int hp) : base(x, y, enemyArrayNum) // For loading from save file
+        {
+            MaxHP = 10;
+            HP = hp;
+            Damage = 1;
+            EnemyType = TileType.SwampCreature;
+            Type = TileType.SwampCreature;
+        }
 
         public override Movement ReturnMove(Movement move = 0) // Chooses a random direction to move to and checks if it's valid
         {

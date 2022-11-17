@@ -89,30 +89,140 @@ namespace Basic_Hero_Game
 
         public void Save() //method to save map class
         {
-            FileStream fs = new FileStream("Save.Map", FileMode.Create);
-            BinaryWriter bw = new BinaryWriter(fs);
+            
+            FileStream fs = new FileStream("SaveFile.bin", FileMode.Create);
+            BinaryWriter write = new BinaryWriter(fs);
 
-           //bw.Write();
-         
+            write.Write(Map.mapWidth);
+            write.Write(Map.mapHeight);
+            write.Write(Map.TotalEnemyAmount);
+            write.Write(Map.goldAmount);
 
+            for (int row = 0; row < Map.mapHeight; row++)
+            {
+                for (int col = 0; col < Map.mapWidth; col++)
+                {
+                    write.Write((char)Map.TileMap[row, col].Type);
+                    if (Map.TileMap[row, col].Type == Tile.TileType.Hero)
+                    {
+                        write.Write(Map.Hero.HP);
+                        write.Write(Map.Hero.MaxHP);
+                        write.Write(Map.Hero.GoldPurse);
+                    }
+                    else if (Map.TileMap[row, col].Type == Tile.TileType.SwampCreature)
+                    {
+                        SwampCreature sc = (SwampCreature)Map.TileMap[row, col];
+                        write.Write(sc.HP);
+                        write.Write(sc.GoldPurse);
+                    }
+                    else if (Map.TileMap[row, col].Type == Tile.TileType.Mage)
+                    {
+                        Mage mage = (Mage)Map.TileMap[row, col];
+                        write.Write(mage.HP);
+                        write.Write(mage.GoldPurse);
+                    }
+                    else if (Map.TileMap[row, col].Type == Tile.TileType.Gold)
+                    {
+                        Gold gold = (Gold)Map.TileMap[row, col];
+                        write.Write(gold.GoldAmount);
+                    }
+                }
+            }
 
-            bw.Close();
+            write.Close();
             fs.Close();
-
         }
 
-        static void Load() //method to load map class
+        internal void Load()
         {
-            FileStream fs = new FileStream("Load.Map", FileMode.Open);
+            FileStream fs = new FileStream("SaveFile.bin", FileMode.Open);
             BinaryReader br = new BinaryReader(fs);
 
-        }
+            // Read data in same order that they were written
 
-        public void EnemyAttacks() //method thats allows enemies to attack
-        {
+            // Read Map
+            int mapWidth = br.ReadInt32();
+            int mapHeight = br.ReadInt32();
 
+            Map = new Map(mapWidth, mapHeight); // Create plain map
+
+
+            // Read Hero
+            int heroX = br.ReadInt32();
+            int heroY = br.ReadInt32();
+            int heroHP = br.ReadInt32();
+            int heroMaxHP = br.ReadInt32();
+            int goldPurse = br.ReadInt32();
+            // Create New Hero
+            Map.Hero = new Hero(heroX, heroY, heroHP, heroMaxHP, goldPurse);
+            Map.TileMap[heroY, heroX] = Map.Hero; // Place Hero on map
+
+
+            // Read Enemies
+            int enemyX, enemyY, enemyHP;
+            char enemySymbol;
+
+            Map.TotalEnemyAmount = br.ReadInt32(); // Read the amount of enemies there are
+
+            Map.Enemies = new Enemy[Map.TotalEnemyAmount];
+
+            for (int i = 0; i < Map.TotalEnemyAmount; i++)
+            {
+                enemyX = br.ReadInt32();
+                enemyY = br.ReadInt32();
+                enemySymbol = br.ReadChar();
+                enemyHP = br.ReadInt32();
+
+                if (enemySymbol == (char)Tile.TileType.SwampCreature) // Create SwampCreature
+                {
+                    Map.Enemies[i] = new SwampCreature(enemyX, enemyY, i, enemyHP);
+                    Map.TileMap[enemyY, enemyX] = Map.Enemies[i];
+                }
+                else // Create Mage
+                {
+                    Map.Enemies[i] = new Mage(enemyX, enemyY, i, enemyHP);
+                    Map.TileMap[enemyY, enemyX] = Map.Enemies[i];
+                }
+            }
+
+            // Read Items
+            int itemsLength = br.ReadInt32();
+            Map.Items = new Item[itemsLength];
+
+            bool isNull;
+            int itemX;
+            int itemY;
+            int goldAmount;
+
+            for (int i = 0; i < itemsLength; i++)
+            {
+                isNull = br.ReadBoolean();  // Check if each item is null or not null
+                if (!isNull)
+                {                           // Assign values to non-null objects
+                    itemX = br.ReadInt32();
+                    itemY = br.ReadInt32();
+                    goldAmount = br.ReadInt32();
+                    Map.Items[i] = new Gold(itemX, itemY, goldAmount);
+                    Map.TileMap[itemY, itemX] = Map.Items[i];
+                }
+            }
+
+            br.Close();
+            fs.Close();
+
+            Map.UpdateVision();
         }
+    }
+    }
 
         
-    }
-}
+      
+
+       /* public void EnemyAttack() //method thats allows enemies to attack
+        {
+            
+        }
+         */
+        
+    
+

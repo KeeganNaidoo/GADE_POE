@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -126,12 +127,20 @@ namespace Basic_Hero_Game
 
        private void button1_Click(object sender, EventArgs e)
         {
-            //Save();
+            gameEngine.Save();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //Load();
+            try
+            {
+                gameEngine.Load();
+                UpdateScreen();
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Save file does not exist");
+            }
         }
     }
 }

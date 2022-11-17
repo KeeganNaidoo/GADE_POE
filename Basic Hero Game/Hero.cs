@@ -15,6 +15,15 @@ namespace Basic_Hero_Game
             Damage = 2;
             Type = TileType.Hero;
         }
+
+        public Hero(int x, int y, int hp, int maxHP, int gold) : base(x, y) // For loading from save file
+        {
+            HP = hp;
+            MaxHP = maxHP;
+            Damage = 2;
+            Type = TileType.Hero;
+            GoldPurse = gold;
+        }
         public override Movement ReturnMove(Movement move)
         {
             if (CharactersVision[(int)move].Type == TileType.EmptyTile)
