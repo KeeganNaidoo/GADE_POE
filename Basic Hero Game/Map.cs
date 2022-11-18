@@ -145,19 +145,25 @@ namespace Basic_Hero_Game
                 yPos = random.Next(1, mapHeight - 1);
             }
             while (TileMap[yPos, xPos].Type != Tile.TileType.EmptyTile); // Don't spawn on a space that is not empty
-            if (type == Tile.TileType.SwampCreature) // spawn swamp creature
+
+            if (type == Tile.TileType.SwampCreature) // spawn enemy
             {
-                Enemies[enemyCount] = new SwampCreature(xPos, yPos, enemyCount);
+                Enemies[enemyCount] = new SwampCreature(xPos, yPos, enemyCount); // Create object
+                TileMap[yPos, xPos] = Enemies[enemyCount];                       // Put object on map
+            }
+            else if (type == Tile.TileType.Mage)
+            {
+                Enemies[enemyCount] = new Mage(xPos, yPos, enemyCount);
                 TileMap[yPos, xPos] = Enemies[enemyCount];
             }
-            else if (type == Tile.TileType.Mage) // spawn mage
+            else if (type == Tile.TileType.Leader)
             {
-                Mage = new Mage(xPos, yPos, enemyCount);
-                TileMap[yPos, xPos] = Mage;
+                Enemies[enemyCount] = new Leader(xPos, yPos, enemyCount); // adding leader to the map
+                TileMap[yPos, xPos] = Enemies[enemyCount];
             }
-            else if (type == Tile.TileType.Hero) // spawn hero
+            else if (type == Tile.TileType.Hero)// spawn hero
             {
-                Hero = new Hero(xPos, yPos, 15);
+                Hero = new Hero(xPos, yPos, 30);
                 TileMap[yPos, xPos] = Hero;
             }
             else // Spawn Gold Drops

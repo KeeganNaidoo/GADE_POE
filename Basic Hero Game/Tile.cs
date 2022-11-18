@@ -32,7 +32,8 @@ namespace Basic_Hero_Game
             EmptyTile = '.',
             Mage = 'M',
             MeleeWeapon = 'W',
-            RangedWeapon = 'R'
+            RangedWeapon = 'R',
+            Leader = 'L'
         }
 
         public Tile(int x, int y)

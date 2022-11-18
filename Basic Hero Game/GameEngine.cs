@@ -89,7 +89,7 @@ namespace Basic_Hero_Game
             CheckForDead(Map.Hero);
         }
 
-        public void EnemyAttack() //method thats allows enemies to attack
+        public void EnemiesAttack()
         {
             for (int enemyCount = 0; enemyCount < Map.TotalEnemyAmount; enemyCount++)
             {
@@ -111,7 +111,7 @@ namespace Basic_Hero_Game
             }
             CheckForDead(Map.Hero);
         }
-        
+
 
         public void Save() //method to save map class
         {

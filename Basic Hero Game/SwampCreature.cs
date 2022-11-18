@@ -33,7 +33,7 @@ namespace Basic_Hero_Game
         public override Movement ReturnMove(Movement move = 0) // Chooses a random direction to move to and checks if it's valid
         {
             int direction;
-            for (int i = 0; i < 4; i++) // checks 4 times if the space in a different random direction is empty.
+            for (int i = 0; i < 3; i++)
             {
                 direction = random.Next(1, 5);
                 move = (Movement)direction; // Cast the int value to its corresponding enum value
