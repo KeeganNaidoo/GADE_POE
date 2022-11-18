@@ -19,7 +19,7 @@ namespace Basic_Hero_Game
         }
         public GameEngine()
         {
-            Map = new Map(10, 15, 6, 12, 4);
+            Map = new Map(10, 15, 6, 12, 4, 3);
         }
 
         public void MovePlayer(Character.Movement direction) 
@@ -27,7 +27,7 @@ namespace Basic_Hero_Game
             // The previous space get replaced by empty tile
             Map.TileMap[Map.Hero.Y, Map.Hero.X] = new EmptyTile(Map.Hero.X, Map.Hero.Y);
 
-            Map.Hero.Move(Map.Hero.ReturnMove(direction));
+            Map.Hero.ReturnMove(Map.Hero.ReturnMove(direction));
 
             Map.TileMap[Map.Hero.Y, Map.Hero.X] = Map.Hero; // The new space changes to Hero after their coordinates gets changed
 

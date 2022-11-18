@@ -51,5 +51,5 @@ namespace Basic_Hero_Game
         }                           // distance > 0 so that Mages don't attack themselves when attacking other enemies
 
     }
-    }
+    
 }

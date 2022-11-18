@@ -24,13 +24,19 @@ namespace Basic_Hero_Game
             Type = TileType.Hero;
             GoldPurse = gold;
         }
+        public bool HeroOnGold { get; set; } = false;
         public override Movement ReturnMove(Movement move)
         {
             if (CharactersVision[(int)move].Type == TileType.EmptyTile)
             {
                 return move;
             }
-            else return Movement.NoMovement;
+            else if (CharactersVision[(int)move].Type == TileType.Gold) // this is needed to be able to move onto a gold Tile
+            {
+                HeroOnGold = true;
+                return move;
+            }
+            else return Movement.NoMovement; // returned if the movement is not valid
         }
 
         public override string ToString()

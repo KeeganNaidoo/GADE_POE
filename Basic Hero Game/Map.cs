@@ -47,7 +47,7 @@ namespace Basic_Hero_Game
         private int enemyCount; // For keeping track of the enemy number for the enemies array
 
         public static Tile[,] TileMap { get; set; }
-        public Map(int minWidth, int maxWidth, int minHeight, int maxHeight, int enemyAmount)
+        public Map(int minWidth, int maxWidth, int minHeight, int maxHeight, int enemyAmount, int goldDropsAmount)
         {
             mapWidth = random.Next(minWidth, maxWidth + 1);
             mapHeight = random.Next(minHeight, maxHeight + 1);
@@ -55,6 +55,9 @@ namespace Basic_Hero_Game
 
             TotalEnemyAmount = enemyAmount;
             Enemies = new Enemy[TotalEnemyAmount];
+
+            TotalGoldDrops = goldDropsAmount;
+            Items = new Item[TotalGoldDrops];
 
             // Create border and empty spaces
             for (int row = 0; row < TileMap.GetLength(0); row++) // Iterate through 2D array
@@ -75,7 +78,23 @@ namespace Basic_Hero_Game
                     }
                 }
             }
+            //int enemyRandomiser;
+            //for (enemyCount = 0; enemyCount < TotalEnemyAmount; enemyCount++) // Spawn all enemies
+            //{
+            //    enemyRandomiser = random.Next(2);
+            //    if (enemyRandomiser == 0)
+            //        Create(Tile.TileType.SwampCreature);
+            //    else
+            //        Create(Tile.TileType.Mage);
+            //}
+            //Create(Tile.TileType.Hero); // spawn hero
 
+            //for (goldAmount = 0; goldAmount < TotalGoldDrops; goldAmount++) // Spawn gold drops
+            //{
+            //    Create(Tile.TileType.Gold);
+            //}
+
+            //UpdateVision();
             for (enemyCount = 0; enemyCount < TotalEnemyAmount; enemyCount++) // Spawn all enemies
             {
                 Create(Tile.TileType.SwampCreature);
@@ -141,11 +160,10 @@ namespace Basic_Hero_Game
                 Hero = new Hero(xPos, yPos, 15);
                 TileMap[yPos, xPos] = Hero;
             }
-            else if (type == Tile.TileType.Gold) // spawn gold
+            else // Spawn Gold Drops
             {
-                Gold = new Gold(xPos, yPos);
-                TileMap[yPos, xPos] = Gold;
-
+                Items[goldAmount] = new Gold(xPos, yPos);
+                TileMap[yPos, xPos] = Items[goldAmount];
             }
             return TileMap[yPos, xPos];
         }
@@ -181,9 +199,23 @@ namespace Basic_Hero_Game
             return mapString;
         }
 
-        public void GetItemAtPosition(int x, int y) //this method searches the Items array for an item that exists
+        public Item GetItemAtPosition(int x, int y) //this method searches the Items array for an item that exists
         {
-            return;
+            Item returnItem;
+            for (int searchIndex = 0; searchIndex < Items.Length; searchIndex++)
+            {
+                if (Items[searchIndex] != null) // So that program doesn't crash if other items in array are null
+                {                               // It would crash if it looks for properties of a null object
+
+                    if (Items[searchIndex].X == x && Items[searchIndex].Y == y) // search for item via its coordinates
+                    {
+                        returnItem = Items[searchIndex];
+                        Items[searchIndex] = null; // Change the Item in the Items array to null before returning the Item to be given
+                        return returnItem;
+                    }
+                }
+            }
+            return null;
         }
 
     }
