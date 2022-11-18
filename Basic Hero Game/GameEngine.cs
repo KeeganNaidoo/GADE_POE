@@ -11,6 +11,8 @@ namespace Basic_Hero_Game
 {
     public class GameEngine
     {
+        Shop myShop = new Shop();
+
         private Map map;
         public Map Map
         {
