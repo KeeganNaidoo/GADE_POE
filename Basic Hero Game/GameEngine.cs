@@ -25,12 +25,20 @@ namespace Basic_Hero_Game
         public void MovePlayer(Character.Movement direction) 
         {
             // The previous space get replaced by empty tile
-            Map.TileMap[Map.Hero.Y, Map.Hero.X] = new EmptyTile(Map.Hero.X, Map.Hero.Y);
+            //Map.TileMap[Map.Hero.Y, Map.Hero.X] = new EmptyTile(Map.Hero.X, Map.Hero.Y);
 
-            Map.Hero.ReturnMove(Map.Hero.ReturnMove(direction));
+            //Map.Hero.Move(Map.Hero.ReturnMove(direction));
 
-            Map.TileMap[Map.Hero.Y, Map.Hero.X] = Map.Hero; // The new space changes to Hero after their coordinates gets changed
+            //Map.TileMap[Map.Hero.Y, Map.Hero.X] = Map.Hero; // The new space changes to Hero after their coordinates gets changed
 
+            //Map.UpdateVision();
+
+            Map.Hero.Move(Map.Hero.ReturnMove(direction), Map.Hero);
+            if (Map.Hero.HeroOnGold)
+            {
+                Map.Hero.PickUp(Map.GetItemAtPosition(Map.Hero.X, Map.Hero.Y));
+                map.Hero.HeroOnGold = false;
+            }
             Map.UpdateVision();
         }
 
