@@ -8,6 +8,10 @@ namespace Basic_Hero_Game
 {
     public abstract class Character : Tile    //abstract base class called Character that inherits from Tile
     {
+        public Character(int x, int y) : base(x, y)
+        {
+
+        }
         public int HP { get; set; } //current hit points
 
         public int MaxHP { get; set; } //max hit points
@@ -25,6 +29,7 @@ namespace Basic_Hero_Game
             set { MaxHP = value; }
         }
 
+
         public enum Movement
         {
             NoMovement,
@@ -38,13 +43,7 @@ namespace Basic_Hero_Game
 
         public Tile[] CharactersVision { get; set; } = new Tile[5];
 
-        public Character(int x, int y) : base(x, y)
-        {
-
-        }
-
         
-       
         public virtual void Attack(Character target) // Attacks a target and decreases its health by the attacking character’s damage
         {
             target.HP = target.HP - Damage;
@@ -77,29 +76,37 @@ namespace Basic_Hero_Game
             return Math.Abs(target.X - X) + Math.Abs(target.Y - Y);    
         }
 
-        public void Move(Movement move) //Edits a unit’s X and Y values to move it up/down/left/right based on the identifier from the enum
+        public void Move(Movement move, Tile characterTile) //Edits a unit’s X and Y values to move it up/down/left/right based on the identifier from the enum
         {
-            if (move == Movement.NoMovement)
+            Map.TileMap[Y, X] = new EmptyTile(X, Y);
+            switch (move)
             {
+                case Movement.NoMovement:
+                    break;
+                case Movement.Up:
+                    Y -= 1; // Edit Character's coordinates
+                    break;
+                case Movement.Down:
+                    Y += 1;
+                    break;
+                case Movement.Left:
+                    X -= 1;
+                    break;
+                case Movement.Right:
+                    X += 1;
+                    break;
+            }
+            Map.TileMap[Y, X] = characterTile; // The new space changes to Character
 
-            }
-            else if (move == Movement.Up)
-            {
-                Y -= 1; // edit characters coordinates
-            }
-            else if (move == Movement.Down)
-            {
-                Y += 1;
-            }
-            else if (move == Movement.Left)
-            {
-                X -= 1;
-            }
-            else if (move == Movement.Right)
-            {
-                X += 1;
-            }
+        }
 
+        public void PickUp(Item i)
+        {
+            if (i.Type == TileType.Gold)
+            {
+                Gold gold = i as Gold; // You need to cast from Item to Gold to be able to access GoldAmount in the Gold class
+                GoldPurse += gold.GoldAmount;
+            }
         }
 
         public abstract Movement ReturnMove(Movement move = 0);
@@ -108,10 +115,7 @@ namespace Basic_Hero_Game
 
         public abstract override string ToString();
 
-        public void Pickup(Item item) //checks the type of item passed in as a parameter
-        {
-            return;
-        }
+        
 
     }
     

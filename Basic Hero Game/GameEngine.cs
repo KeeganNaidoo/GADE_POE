@@ -64,14 +64,8 @@ namespace Basic_Hero_Game
         {
             for (int enemyCount = 0; enemyCount < Map.TotalEnemyAmount; enemyCount++)
             {
-                // The previous space get replaced by an empty tile
-                Map.TileMap[Map.Enemies[enemyCount].Y, Map.Enemies[enemyCount].X] = new EmptyTile(Map.Enemies[enemyCount].X, Map.Enemies[enemyCount].Y);
-
-                Map.Enemies[enemyCount].Move(Map.Enemies[enemyCount].ReturnMove());
-
-                Map.TileMap[Map.Enemies[enemyCount].Y, Map.Enemies[enemyCount].X] = Map.Enemies[enemyCount]; // The new space changes to Enemy after their coordinates gets changed
-
-                Map.UpdateVision(); // Vision updates every time something on the map moves
+                Map.Enemies[enemyCount].Move(Map.Enemies[enemyCount].ReturnMove(), Map.Enemies[enemyCount]);
+                Map.UpdateVision();
             }
         }
 
@@ -86,6 +80,30 @@ namespace Basic_Hero_Game
             }
             CheckForDead(Map.Hero);
         }
+
+        public void EnemyAttack() //method thats allows enemies to attack
+        {
+            for (int enemyCount = 0; enemyCount < Map.TotalEnemyAmount; enemyCount++)
+            {
+                if (Map.Enemies[enemyCount].CheckRange(Map.Hero))
+                {
+                    Map.Enemies[enemyCount].Attack(Map.Hero);
+                }
+                if (Map.Enemies[enemyCount].Type == Tile.TileType.Mage) // Mage attack on other enemies
+                {
+                    for (int targetEnemy = 0; targetEnemy < Map.TotalEnemyAmount; targetEnemy++)
+                    {
+                        if (Map.Enemies[enemyCount].CheckRange(Map.Enemies[targetEnemy])) // Check if all other enemies are in range of the current enemy which is a Mage
+                        {
+                            Map.Enemies[enemyCount].Attack(Map.Enemies[targetEnemy]);
+                            CheckForDead(Map.Enemies[targetEnemy]);
+                        }
+                    }
+                }
+            }
+            CheckForDead(Map.Hero);
+        }
+        
 
         public void Save() //method to save map class
         {
@@ -220,11 +238,7 @@ namespace Basic_Hero_Game
         
       
 
-       /* public void EnemyAttack() //method thats allows enemies to attack
-        {
-            
-        }
-         */
+      
         
     
 

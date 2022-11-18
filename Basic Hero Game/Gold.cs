@@ -20,7 +20,7 @@ namespace Basic_Hero_Game
         public Gold(int x, int y) : base(x, y)
         {
             goldAmount = random.Next(1,6);
-
+            Type = TileType.Gold;
 
         }
         public Gold(int x, int y, int goldAmount) : base(x, y) // For loading from save file
@@ -32,7 +32,7 @@ namespace Basic_Hero_Game
 
         public override string ToString()
         {
-            return goldAmount.ToString();
+            return "Gold";
         }
     }
 }
